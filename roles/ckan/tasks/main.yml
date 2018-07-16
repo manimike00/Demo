@@ -117,8 +117,8 @@
     pip install -U setuptools
     pip install --ignore-installed -e git+https://github.com/ckan/ckan.git@ckan-2.7.3#egg=ckan
     rm default/src/ckan/requirements.txt
-    mv /home/centos/dev/ckanDeploy/environment/developments/requirements.txt default/src/ckan
-    mv /home/centos/dev/ckanDeploy/environment/developments/internal-mirror-requirements.txt default/src/ckan/internal-mirror-requirements.txt
+    mv /home/centos/dev/ckanDeploy/environments/developments/requirements.txt default/src/ckan
+    mv /home/centos/dev/ckanDeploy/environments/developments/internal-mirror-requirements.txt default/src/ckan/internal-mirror-requirements.txt
     pip install --ignore-installed --index-url=https://mirror.syngentaaws.org/pypi/simple -r default/src/ckan/internal-mirror-requirements.txt
     pip install --ignore-installed -r default/src/ckan/pip-requirements-docs.txt
     exit
