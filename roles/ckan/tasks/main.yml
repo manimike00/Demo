@@ -110,6 +110,7 @@
 - name: Run CKAN installation script
   become_user: ckan
   shell: |
+    cd /usr/lib/ckan
     virtualenv --no-site-packages default
     . default/bin/activate
     pip install --upgrade pip
