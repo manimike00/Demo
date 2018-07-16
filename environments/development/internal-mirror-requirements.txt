@@ -1,2 +1,2 @@
-plyons==0.9.7
+pylons==0.9.7
 WebHelpers==1.0.3
