@@ -233,6 +233,31 @@
     exit
   notify: Restart Apache webserver
 
+
+- name: Install CKAN Spatial extension
+  become_user: root
+  become: yes
+  shell: |
+    su -s /bin/bash - ckan
+    cd /usr/lib/ckan
+    . default/bin/activate
+    pip install -e "git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial"
+    pip install -r /usr/lib/ckan/default/src/ckanext-spatial/pip-requirements.txt
+    exit
+  notify: Restart Apache webserver
+
+- name: Install CKAN Geoview extension
+  become_user: root
+  become: yes
+  shell: |
+    su -s /bin/bash - ckan
+    cd /usr/lib/ckan
+    . default/bin/activate
+    pip install ckanext-geoview
+    exit
+  notify: Restart Apache webserver
+
+
 - name: Ensure latest version of CKAN harvest extension is installed
   become_user: root
   become: yes

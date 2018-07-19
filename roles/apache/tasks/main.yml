@@ -47,6 +47,10 @@
   with_items:
   - /etc/httpd/conf.d/autoindex.conf
 
+- name: Allow execution of files in /temp
+  become: yes
+  shell: /usr/sbin/setsebool httpd_tmp_exec on
+
 
 - name: Ensure Apache is running and enabled
   service:
