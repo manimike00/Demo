@@ -121,14 +121,11 @@
   register: ckan_installed
 
 - name: Replace Dependency Docs
-  become_user: ckan
   shell: |
-  cd /usr/lib/ckan
-  . default/bin/activate
-  rm default/src/ckan/requirements.txt
-  mv /home/centos/dev/ckanDeploy/environments/developments/requirements.txt default/src/ckan
-  mv /home/centos/dev/ckanDeploy/environments/developments/internal-mirror-requirements.txt default/src/ckan/internal-mirror-requirements.txt
-  exit
+    rm /usr/lib/ckan/default/src/ckan/requirements.txt
+    cp /home/centos/dev/ckanDeploy/environments/development/requirements.txt /usr/lib/ckan/default/src/ckan
+    cp /home/centos/dev/ckanDeploy/environments/development/internal-mirror-requirements.txt /usr/lib/ckan/default/src/ckan/internal-mirror-requirements.txt
+    exit
 
 - name: Install Mirror Deps
   become_user: ckan
@@ -140,11 +137,11 @@
 
 - name: Install Normal Deps
   become_user: ckan
-  shell:
-  cd /usr/lib/ckan
-  . default/bin/activate
-  pip install --ignore-installed -r default/src/ckan/pip-requirements-docs.txt
-  exit
+  shell: |
+    cd /usr/lib/ckan
+    . default/bin/activate
+    pip install --ignore-installed -r default/src/ckan/pip-requirements-docs.txt
+    exit
 
 - name: Generate session secret
   shell: openssl rand -base64 32 > /etc/ckan/default/session_secret

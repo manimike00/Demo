@@ -1,2 +1,2 @@
 pylons==0.9.7
-WebHelpers==1.0.3
+WebHelpers==1.0
