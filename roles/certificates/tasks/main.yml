@@ -1,5 +1,3 @@
----
-# copyright Utrecht University
 
 - name: Ensure dependencies for Ansible OpenSSL module are installed
   package:
@@ -22,7 +20,7 @@
     -out '{{ openssl_csr_selfsigned }}' -batch -subj \
     '/O={{ openssl_o }}/C={{ openssl_c }}\
      /localityName={{ openssl_localityName }}\
-     /commonName={{ ansible_fqdn }}'"
+     /commonName={{ openssl_cn }}'"
   args:
     chdir: '{{ openssl_certs_dir }}'
     creates: '{{ openssl_csr_selfsigned }}'

@@ -14,3 +14,5 @@ openssl_crt_signed: localhost.crt
 openssl_o: 'Syngenta'
 openssl_c: 'CH'
 openssl_localityName: 'Syngenta'
+openssl_cn: 'gris-dev.syngentaaws.org'
+
