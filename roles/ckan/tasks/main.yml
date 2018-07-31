@@ -120,20 +120,20 @@
     creates=/usr/lib/ckan/default/src/ckan/ckan/config/solr/schema.xml
   register: ckan_installed
 
-- name: Replace Dependency Docs
-  shell: |
-    rm /usr/lib/ckan/default/src/ckan/requirements.txt
-    cp /home/centos/dev/ckanDeploy/environments/development/requirements.txt /usr/lib/ckan/default/src/ckan
-    cp /home/centos/dev/ckanDeploy/environments/development/internal-mirror-requirements.txt /usr/lib/ckan/default/src/ckan/internal-mirror-requirements.txt
-    exit
+#- name: Replace Dependency Docs
+#  shell: |
+#    rm /usr/lib/ckan/default/src/ckan/requirements.txt
+#    cp /home/centos/dev/ckanDeploy/environments/development/requirements.txt /usr/lib/ckan/default/src/ckan
+#    cp /home/centos/dev/ckanDeploy/environments/development/internal-mirror-requirements.txt /usr/lib/ckan/default/src/ckan/internal-mirror-requirements.txt
+#    exit
 
-- name: Install Mirror Deps
-  become_user: ckan
-  shell: |
-    cd /usr/lib/ckan
-    . default/bin/activate
-    pip install --ignore-installed --index-url=https://mirror.syngentaaws.org/pypi/simple -r default/src/ckan/internal-mirror-requirements.txt
-    exit
+#- name: Install Mirror Deps
+#  become_user: ckan
+#  shell: |
+#    cd /usr/lib/ckan
+#    . default/bin/activate
+#    pip install --disable-pip-version-check  --index-url=https://mirror.syngentaaws.org/pypi/simple -r default/src/ckan/internal-mirror-requirements.txt
+#    exit
 
 - name: Install Normal Deps
   become_user: ckan
@@ -254,6 +254,18 @@
     exit
   notify: Restart Apache webserver
 
+- name: Install CKAN Datarequests extension
+  become_user: root
+  become: yes
+  shell: |
+    su -s /bin/bash - ckan
+    cd /usr/lib/ckan
+    . default/bin/activate
+    pip install ckanext-datarequests
+    exit
+  notify: Restart Apache webserver
+
+
 
 - name: Ensure latest version of CKAN harvest extension is installed
   become_user: root
@@ -276,6 +288,12 @@
     exit
   #when: ckan_installed.changed
 
+#- name: Set datastore permissions
+#  become: yes
+#  shell: |
+#    . /usr/lib/ckan/default/bin/activate
+#    paster --plugin=ckan datastore set-permissions -c /etc/ckan/default/development.ini | sudo -u postgres psql
+#    exit
 
 - name: Check if CKAN admin user exists
   become_user: ckan

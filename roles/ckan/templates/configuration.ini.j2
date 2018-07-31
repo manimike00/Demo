@@ -50,12 +50,12 @@ who.log_file = %(cache_dir)s/who_log.ini
 ## Database Settings
 sqlalchemy.url = postgresql://gisadmin:Syn-Aur-Dev@deawdaurgisd002.c0teethmpf9v.eu-central-1.rds.amazonaws.com/ckan_default
 
-ckan.datastore.write_url = postgresql://ckan_default:test@localhost/datastore_default
-ckan.datastore.read_url = postgresql://datastore_default:datastore@localhost/datastore_default
+ckan.datastore.write_url = postgresql://gisadmin:Syn-Aur-Dev@deawdaurgisd002.c0teethmpf9v.eu-central-1.rds.amazonaws.com/datastore_default
+ckan.datastore.read_url = postgresql://datastore_default:datastore@deawdaurgisd002.c0teethmpf9v.eu-central-1.rds.amazonaws.com/datastore_default
 
 # PostgreSQL' full-text search parameters
-ckan.datastore.default_fts_lang = english
-ckan.datastore.default_fts_index_method = gist
+#ckan.datastore.default_fts_lang = english
+#ckan.datastore.default_fts_index_method = gist
 
 ## Site Settings
 
@@ -103,12 +103,14 @@ ckan.redis.url = redis://localhost:6379/0
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = syngenta datastore spatial_metadata spatial_query resource_proxy geo_view social stats text_view image_view recline_view harvest ckan_harvester
+ckan.plugins = datarequests syngenta datastore spatial_metadata spatial_query resource_proxy geo_view  social stats text_view image_view recline_view harvest ckan_harvester
 ckan.storage_path = /var/lib/ckan/default
 
 ckanext.geoview.ol_viewer.formats = wms kml geojson
 ckan.geoview.oauth = false
 ckanext.spatial.common_map.type = stamen
+ckan.datarequests.comments = true
+ckan.datarequests.show_datarequests_badge = false
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
@@ -175,9 +177,9 @@ ckan.feeds.author_link =
 
 # Resource Proxy settings
 # Preview size limit, default: 1MB
-#ckan.resource_proxy.max_file_size = 1048576
+ckan.resource_proxy.max_file_size = 1048576
 # Size of chunks to read/write.
-#ckan.resource_proxy.chunk_size = 4096
+ckan.resource_proxy.chunk_size = 4096
 
 ## Activity Streams Settings
 
