@@ -103,7 +103,7 @@ ckan.redis.url = redis://localhost:6379/0
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datarequests syngenta datastore spatial_metadata spatial_query resource_proxy geo_view  social stats text_view image_view recline_view harvest ckan_harvester
+ckan.plugins = datarequests syngenta datastore oauth2 spatial_metadata spatial_query resource_proxy geo_view  social stats text_view image_view recline_view harvest ckan_harvester
 ckan.storage_path = /var/lib/ckan/default
 
 ckanext.geoview.ol_viewer.formats = wms kml geojson
@@ -111,6 +111,19 @@ ckan.geoview.oauth = false
 ckanext.spatial.common_map.type = stamen
 ckan.datarequests.comments = true
 ckan.datarequests.show_datarequests_badge = false
+
+ckan.oauth2.register_url = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/wsfed
+#ckan.oauth2.reset_url =
+#ckan.oauth2.edit_url =
+ckan.oauth2.authorization_endpoint = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/oauth2/authorize
+ckan.oauth2.token_endpoint = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/oauth2/token
+ckan.oauth2.profile_api_url = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/openid/userinfo
+ckan.oauth2.scope = openid
+ckan.oauth2.rememberer_name = auth_tkt
+ckan.oauth2.profile_api_user_field = upn
+ckan.oauth2.profile_api_fullname_field = name
+ckan.oauth2.profile_api_mail_field = upn
+ckan.oauth2.authorization_header = Authorization
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
