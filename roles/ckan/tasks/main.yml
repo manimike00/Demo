@@ -1,5 +1,8 @@
 ---
 # copyright Utrecht University
+#
+
+
 
 - name: Ensure CKAN prerequisites are installed
   package:
@@ -120,6 +123,18 @@
     creates=/usr/lib/ckan/default/src/ckan/ckan/config/solr/schema.xml
   register: ckan_installed
 
+- name: Set ENV Vars
+  become_user: ckan
+  shell: |
+    cd /usr/lib/ckan/
+    . default/bin/activate
+    export REQUESTS_CA_BUNDLE='/etc/pki/tls/certs/ca-bundle.crt'
+
+
+
+
+
+
 #- name: Replace Dependency Docs
 #  shell: |
 #    rm /usr/lib/ckan/default/src/ckan/requirements.txt
@@ -135,13 +150,39 @@
 #    pip install --disable-pip-version-check  --index-url=https://mirror.syngentaaws.org/pypi/simple -r default/src/ckan/internal-mirror-requirements.txt
 #    exit
 
-- name: Install Normal Deps
+#- name: Install Normal Deps
+#  become_user: ckan
+#  shell: |
+#    cd /usr/lib/ckan
+#    . default/bin/activate
+#    pip install -r default/src/ckan/pip-requirements-docs.txt
+#    exit
+
+#- name: Update requests and oauthlib
+#  become: yes
+#  shell: |
+#    cd /usr/lib/ckan
+#    . default/bin/activate
+#    pip install  requests
+#    pip install  requests-oauthlib
+#    exit
+
+- name: Override hostname variabel
   become_user: ckan
   shell: |
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install --ignore-installed -r default/src/ckan/pip-requirements-docs.txt
-    exit
+    export HOSTNAME=gris-dev.syngentaaws.org
+
+
+
+- name: Export SSL_DIR and SSL_FILE
+  become_user: ckan 
+  shell: | 
+    cd /usr/lib/ckan
+    . default/bin/activate
+    export SSL_CERT_FILE='/etc/pki/tls/certs/gd_bundle-g2-g1.crt'
+    export SSL_CERT_DIR='/etc/pki/tls/certs'
 
 - name: Generate session secret
   shell: openssl rand -base64 32 > /etc/ckan/default/session_secret
@@ -370,3 +411,4 @@
 
 - name: Solr workaround
   command: service solr restart
+

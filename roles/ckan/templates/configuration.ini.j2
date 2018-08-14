@@ -43,6 +43,7 @@ app_instance_uuid = {{ app_instance_uuid.stdout }}
 who.config_file = %(here)s/who.ini
 who.log_level = warning
 who.log_file = %(cache_dir)s/who_log.ini
+who.secure =  true
 # Session timeout (user logged out after period of inactivity, in seconds).
 # Inactive by default, so the session doesn't expire.
 # who.timeout = 86400
@@ -79,7 +80,7 @@ ckan.auth.roles_that_cascade_to_sub_groups = admin
 ## Search Settings
 
 ckan.site_id = default
-solr_url = http://127.0.0.1:8983/solr/ckan
+solr_url = http://localhost:8983/solr/ckan
 
 
 ## Redis Settings
@@ -103,7 +104,7 @@ ckan.redis.url = redis://localhost:6379/0
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datarequests syngenta datastore oauth2 spatial_metadata spatial_query resource_proxy geo_view  social stats text_view image_view recline_view harvest ckan_harvester
+ckan.plugins = datarequests syngenta oauth2 datastore spatial_metadata spatial_query resource_proxy geo_view  social stats text_view image_view recline_view harvest ckan_harvester
 ckan.storage_path = /var/lib/ckan/default
 
 ckanext.geoview.ol_viewer.formats = wms kml geojson
@@ -118,12 +119,30 @@ ckan.oauth2.register_url = https://login.microsoftonline.com/06219a4a-a835-44d5-
 ckan.oauth2.authorization_endpoint = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/oauth2/authorize
 ckan.oauth2.token_endpoint = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/oauth2/token
 ckan.oauth2.profile_api_url = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/openid/userinfo
+ckan.oauth2.client_id = 817b4cfc-197a-44da-8090-d101df02e456
+ckan.oauth2.client_secret = R+otkpf8r8CJKJ7spiYEBN00TFb/yNGkSaDoTO7paEw= 
 ckan.oauth2.scope = openid
 ckan.oauth2.rememberer_name = auth_tkt
 ckan.oauth2.profile_api_user_field = upn
 ckan.oauth2.profile_api_fullname_field = name
 ckan.oauth2.profile_api_mail_field = upn
 ckan.oauth2.authorization_header = Authorization
+
+
+#ckan.oauth2.register_url = https://login.microsoftonline.com/4a06acf5-c5f3-4deb-877c-2121ed5dee95/wsfed
+#ckan.oauth2.reset_url = 
+##ckan.oauth2.edit_url = 
+#ckan.oauth2.authorization_endpoint = https://login.microsoftonline.com/4a06acf5-c5f3-4deb-877c-2121ed5dee95/oauth2/authorize
+#ckan.oauth2.token_endpoint = https://login.microsoftonline.com/4a06acf5-c5f3-4deb-877c-2121ed5dee95/oauth2/token
+#ckan.oauth2.profile_api_url = https://login.microsoftonline.com/4a06acf5-c5f3-4deb-877c-2121ed5dee95/openid/userinfo
+#ckan.oauth2.client_id = 6de64850-55de-456e-aec0-3030632618a7
+#ckan.oauth2.client_secret = umrPEe/U85+wqWxa6o9Q0BguOns/ae9r2RgW8fdC7lE=
+#ckan.oauth2.scope = openid
+#ckan.oauth2.rememberer_name = auth_tkt
+#ckan.oauth2.profile_api_user_field = upn
+#ckan.oauth2.profile_api_fullname_field = name
+#ckan.oauth2.profile_api_mail_field = upn
+#ckan.oauth2.authorization_header = Authorization
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
