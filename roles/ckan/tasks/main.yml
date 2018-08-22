@@ -130,6 +130,10 @@
     . default/bin/activate
     export REQUESTS_CA_BUNDLE='/etc/pki/tls/certs/ca-bundle.crt'
 
+- name: Add ENV Vars to sysconfig for httpd
+  become: yes
+  shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/configfile
+
 - name: look for schema folder
   become_user: root
   become: yes
@@ -142,7 +146,7 @@
   shell: mkdir /usr/lib/ckan/default/src/ckanext-scheming/ckanext/scheming
   when: not path.stat.exists
 
-- name: Move over camel schema
+- name: Move over metadata schema
   template:
     src: "syngenta.json"
     dest: "/usr/lib/ckan/default/src/ckanext-scheming/ckanext/scheming"
