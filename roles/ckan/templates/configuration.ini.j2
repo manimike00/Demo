@@ -104,8 +104,10 @@ ckan.redis.url = redis://localhost:6379/0
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datarequests syngenta oauth2 datastore spatial_metadata spatial_query resource_proxy geo_view  social stats text_view image_view recline_view harvest ckan_harvester
+ckan.plugins = datarequests syngenta oauth2 scheming_datasets datastore spatial_metadata spatial_query resource_proxy geo_view  social stats text_view image_view recline_view harvest ckan_harvester
 ckan.storage_path = /var/lib/ckan/default
+
+scheming.dataset_schemas = ckanext.scheming:syngenta.json
 
 ckanext.geoview.ol_viewer.formats = wms kml geojson
 ckan.geoview.oauth = false

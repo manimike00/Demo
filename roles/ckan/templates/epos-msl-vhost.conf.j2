@@ -33,6 +33,7 @@
     SSLEngine on
     SSLCertificateFile      {{ openssl_certs_dir }}/{{ openssl_crt_signed }}
     SSLCertificateKeyFile   {{ openssl_private_dir }}/{{ openssl_key_signed }}      
+    SSLCertificateChainFile /etc/pki/tls/certs/gd_bundle.crt 
     #SSLCertificateChainFile    /etc/pki/tls/certs/gd_bundle-g2-g1.crt
     # HSTS (mod_headers is required) (15768000 seconds = 6 months)
     Header always set Strict-Transport-Security "max-age=15768000"
