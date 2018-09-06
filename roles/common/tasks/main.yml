@@ -1,0 +1,5 @@
+---
+# copyright Utrecht University
+
+- import_tasks: hostname.yml
+- import_tasks: basics.yml
