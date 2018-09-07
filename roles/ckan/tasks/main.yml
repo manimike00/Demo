@@ -1,5 +1,4 @@
 ---
-# copyright Utrecht University
 #
 
 
@@ -132,7 +131,7 @@
 
 - name: Add ENV Vars to sysconfig for httpd
   become: yes
-  shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/httpdconfig
+  shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/httpd
 
 - name: look for schema folder
   become_user: root

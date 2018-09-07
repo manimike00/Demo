@@ -65,7 +65,7 @@
       "form_placeholder": "Joe Bloggs",
       "display_property": "dc:creator",
       "required": "True",
-      "help_text": "Person responsible for maintaining the asset."
+      "help_text": "Person who submitted the data asset for cataloging."
     },
     {
       "field_name": "author_email",
@@ -81,7 +81,7 @@
       "label": "Data Steward",
       "form_placeholder": "Joe Bloggs",
       "display_property": "dc:contributor",
-      "help_text": "Person who submitted data asset for cataloging.",
+      "help_text": "Person responsible for maintaining the asset.",
       "required": "True"
     },
     {
