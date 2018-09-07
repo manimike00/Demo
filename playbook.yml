@@ -1,0 +1,34 @@
+---
+# This playbook deploys a complete CKAN instance.
+
+- hosts: solr
+  vars:
+    ansible_ssh_private_key_file: 
+  become: yes
+  roles:
+    - common
+    - certificates
+    - apache
+    - solr
+
+- hosts: ckan
+  connection: local
+  vars:
+    solr_url: 
+    database_username:
+    database_password:                                 # CKAN Postgresql database password
+    database_url: 
+    ckan_admin_password: test                                      # CKAN admin user ('ckanadmin') password
+    ckan_harvest_password: test                                    # CKAN harvest user ('harvest') password
+    epos_msl_version: development
+    epos_msl_fqdn:  gris.syngentaaws.org                           # fully qualified domain name (FQDN)
+    epos_msl_environment: development                              # environment: development, testing, acceptance or production
+  become: yes
+  roles:
+    - common
+    - certificates
+    - apache
+    - postgresql
+    - redis
+    - ckan
+    - ckan-harvester
