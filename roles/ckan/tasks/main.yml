@@ -1,5 +1,4 @@
 ---
-# copyright Utrecht University
 #
 
 
@@ -71,7 +70,7 @@
   postgresql_user:
     db: "ckan_default"
     name: "ckan_default"
-    password: "{{ ckan_database_password }}"
+    password: "{{ database_password }}"
     priv: ALL
 
 
@@ -132,7 +131,7 @@
 
 - name: Add ENV Vars to sysconfig for httpd
   become: yes
-  shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/configfile
+  shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/httpd
 
 - name: look for schema folder
   become_user: root
@@ -250,7 +249,6 @@
     dest: /etc/ckan/default/who.ini
     state: link
 
-
 - name: Install CKAN harvest extension
   become_user: root
   become: yes
@@ -258,7 +256,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+https://github.com/ckan/ckanext-harvest.git@{{ ckanext_harvest_version }}#egg=ckanext-harvest
+    pip install -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-harvest.git@{{ ckanext_harvest_version }}#egg=ckanext-harvest
     cd /usr/lib/ckan/default/src/ckanext-harvest/
     pip install -r pip-requirements.txt
     exit
@@ -272,20 +270,20 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+https://github.com/stlviper/ckanext-syngenta.git#egg=ckanext-syngenta
+    pip install --exists-action s -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/syngenta-theme.git#egg=ckanext-syngenta
     exit
   notify: Restart Apache webserver
 
-- name: Install CKAN Social extension
-  become_user: root
-  become: yes
-  shell: |
-    su -s /bin/bash - ckan
-    cd /usr/lib/ckan
-    . default/bin/activate
-    pip install -e git+https://github.com/okfn/ckanext-social#egg=ckanext-social
-    exit
-  notify: Restart Apache webserver
+#- name: Install CKAN Social extension
+#  become_user: root
+#  become: yes
+#  shell: |
+#    su -s /bin/bash - ckan
+#    cd /usr/lib/ckan
+#    . default/bin/activate
+#    pip install -e git+https://github.com/okfn/ckanext-social#egg=ckanext-social
+#    exit
+#  notify: Restart Apache webserver
 
 
 - name: Install CKAN Spatial extension
@@ -295,7 +293,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e "git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial"
+    pip install --exists-action s -e "git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-spatial.git#egg=ckanext-spatial"
     pip install -r /usr/lib/ckan/default/src/ckanext-spatial/pip-requirements.txt
     exit
   notify: Restart Apache webserver
@@ -329,7 +327,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+https://github.com/stlviper/ckanext-oauth2.git#egg=ckanext-oauth2
+    pip install --exists-action s -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-oauth2.git#egg=ckanext-oauth2
     exit
   notify: Restart Apache webserver
 
@@ -340,7 +338,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming
+    pip install --exists-action s -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-scheming.git#egg=ckanext-scheming
     pip install -r /usr/lib/ckan/default/src/ckanext-scheming/requirements.txt
     exit
   notify: Restart Apache webserver
