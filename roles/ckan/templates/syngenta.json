@@ -65,7 +65,7 @@
       "form_placeholder": "Joe Bloggs",
       "display_property": "dc:creator",
       "required": "True",
-      "help_text": "Person responsible for maintaining the asset."
+      "help_text": "Person who submitted the data asset for cataloging."
     },
     {
       "field_name": "author_email",
@@ -81,7 +81,7 @@
       "label": "Data Steward",
       "form_placeholder": "Joe Bloggs",
       "display_property": "dc:contributor",
-      "help_text": "Person who submitted data asset for cataloging.",
+      "help_text": "Person responsible for maintaining the asset.",
       "required": "True"
     },
     {
@@ -525,8 +525,13 @@
       "help_text": "Check all that apply, for crop protection"
     },
     {
+<<<<<<< HEAD
       "field_name": "crop",
       "label": "Crop",
+=======
+      "field_name": "portfolio",
+      "label": "Portfolio",
+>>>>>>> gitlab/master
       "preset": "multiple_checkbox",
       "choices": [
         {"value": "Cereals", "label": "Cereals"},
@@ -541,6 +546,38 @@
       "help_text": "Check all that apply, for seeds"
     },
     {
+<<<<<<< HEAD
+=======
+      "field_name": "crop",
+      "label": "Crop",
+      "preset": "multiple_checkbox",
+      "choices": [
+        {"value": "Grain Corn", "label": "Grain Corn"},
+        {"value": "Silage Corn", "label": "Silage Corn"},
+        {"value": "Soybeans", "label": "Soybeans"},
+        {"value": "Soft Wheat", "label": "Soft Wheat"},
+        {"value": "Winter wheat", "label": "Winter wheat"},
+        {"value": "Spring Wheat", "label": "Spring Wheat"},
+        {"value": "Spring Durum", "label": "Spring Durum"},
+        {"value": "Durum Wheat", "label": "Durum Wheat"},
+        {"value": "Spring Barley", "label": "Spring Barley"},
+        {"value": "Winter Barley", "label": "Winter Barley"},
+        {"value": "Rice", "label": "Rice"},
+        {"value": "Sunflower", "label": "Sunflower"},
+        {"value": "Spring Rape", "label": "Spring Rape"},
+        {"value": "Winter Rape", "label": "Winter Rape"},
+        {"value": "Sugar Cane", "label": "Sugar Cane"}
+
+      ],
+      "help_text": "Check all that apply, for crops"
+    },
+    {
+      "field_name": "crop",
+      "label": "Other Crops",
+      "form_placeholder": "Crop Name or RefData ID CROPXXXX"
+    },
+    {
+>>>>>>> gitlab/master
       "field_name": "dimension",
       "label": "Dimension",
       "preset": "select",
@@ -603,8 +640,13 @@
     {
       "field_name": "spatial",
       "label": "Spatial",
+<<<<<<< HEAD
       "form_placeholder": "\"bbox\": [-180.0, -90.0, 180.0, 90.0]",
       "help_text": "Optional: put in bounding box to enable spatial searching."
+=======
+      "form_placeholder": "",
+      "help_text": "Optional: Enter GeoJSON bounding box to enable spatial searching."
+>>>>>>> gitlab/master
     }
 
   ],

@@ -3,7 +3,7 @@
 
 - hosts: solr
   vars:
-    ansible_ssh_private_key_file: /home/centos/prod-ec2-ssh-rsa.pem
+    ansible_ssh_private_key_file: 
   become: yes
   roles:
     - common
@@ -14,9 +14,10 @@
 - hosts: ckan
   connection: local
   vars:
-    database_username: gisadmin
-    database_password: Syn-Aur-Dev                                 # CKAN Postgresql database password
-    database_url: 10.55.1.177
+    solr_url: 
+    database_username:
+    database_password:                                 # CKAN Postgresql database password
+    database_url: 
     ckan_admin_password: test                                      # CKAN admin user ('ckanadmin') password
     ckan_harvest_password: test                                    # CKAN harvest user ('harvest') password
     epos_msl_version: development

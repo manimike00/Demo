@@ -79,8 +79,7 @@ ckan.auth.roles_that_cascade_to_sub_groups = admin
 
 ## Search Settings
 ckan.site_id = default
-solr_url = http://10.55.1.177:8983/solr/ckan
-
+solr_url = http://{{ solr_url }}:8983/solr/ckan
 
 ## Redis Settings
 
@@ -112,8 +111,16 @@ ckanext.geoview.ol_viewer.formats = wms kml geojson
 ckan.geoview.oauth = false
 ckan.views.default_views = geo_view
 ckanext.spatial.common_map.type = stamen
+
 ckan.datarequests.comments = true
 ckan.datarequests.show_datarequests_badge = false
+
+# Stamen Map Tiles
+ckanext.spatial.common_map.type = custom
+ckanext.spatial.common_map.custom.url = http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg
+ckanext.spatial.common_map.attribution = Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.
+ckanext.spatial.search_backend = postgis
+ckan.spatial.srid = 4326
 
 ckan.oauth2.register_url = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/wsfed
 #ckan.oauth2.reset_url =
@@ -121,8 +128,8 @@ ckan.oauth2.register_url = https://login.microsoftonline.com/06219a4a-a835-44d5-
 ckan.oauth2.authorization_endpoint = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/oauth2/authorize
 ckan.oauth2.token_endpoint = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/oauth2/token
 ckan.oauth2.profile_api_url = https://login.microsoftonline.com/06219a4a-a835-44d5-afaf-3926343bfb89/openid/userinfo
-ckan.oauth2.client_id = f933bf13-474f-48f6-992c-7626b5347e48
-ckan.oauth2.client_secret = 6H8OAGLGIiX7XxZPmihksLHkHubVdC0lQKaDOlE0k1o=
+ckan.oauth2.client_id = 
+ckan.oauth2.client_secret =
 ckan.oauth2.scope = openid
 ckan.oauth2.rememberer_name = auth_tkt
 ckan.oauth2.profile_api_user_field = upn

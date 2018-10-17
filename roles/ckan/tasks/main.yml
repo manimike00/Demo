@@ -435,7 +435,6 @@
     dest: "/etc/httpd/conf.d/epos-msl-vhost.conf"
   notify: Restart Apache webserver
 
-
 - name: Solr workaround
   command: service solr restart
   delegate_to: "{{groups['solr'][0]}}"
