@@ -435,6 +435,11 @@
     dest: "/etc/httpd/conf.d/epos-msl-vhost.conf"
   notify: Restart Apache webserver
 
+- cron:
+    name: Update and reindex ckan tracking data
+    special_time: hourly
+    job: . /usr/lib/ckan/default/bin/activate && paster --plugin=ckan tracking update -c /etc/ckan/default/development.ini && paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/development.ini && deactivate
+
 - name: Solr workaround
   command: service solr restart
   delegate_to: "{{groups['solr'][0]}}"
