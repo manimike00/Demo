@@ -1,8 +1,6 @@
 ---
 #
 
-
-
 - name: Ensure CKAN prerequisites are installed
   package:
     name: '{{ item }}'
@@ -117,10 +115,11 @@
     . default/bin/activate
     pip install --upgrade pip
     pip install -U setuptools
-    pip install --ignore-installed -e git+https://github.com/ckan/ckan.git@ckan-2.7.3#egg=ckan
+    pip install --ignore-installed -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckan.git@{{ ckan_branch }}#egg=ckan
     exit
     creates=/usr/lib/ckan/default/src/ckan/ckan/config/solr/schema.xml
   register: ckan_installed
+
 
 - name: Set ENV Vars
   become_user: ckan
@@ -129,9 +128,11 @@
     . default/bin/activate
     export REQUESTS_CA_BUNDLE='/etc/pki/tls/certs/ca-bundle.crt'
 
+
 - name: Add ENV Vars to sysconfig for httpd
   become: yes
   shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/httpd
+
 
 - name: look for schema folder
   become_user: root
@@ -139,11 +140,13 @@
   stat: path=/usr/lib/ckan/default/src/ckanext-scheming/ckanext/scheming
   register: path
 
+
 - name: Make schma dir
   become_user: root
   become: yes
   shell: mkdir /usr/lib/ckan/default/src/ckanext-scheming/ckanext/scheming
   when: not path.stat.exists
+
 
 - name: Move over metadata schema
   template:
@@ -199,17 +202,18 @@
 #    export SSL_CERT_FILE='/etc/pki/tls/certs/gd_bundle-g2-g1.crt'
 #    export SSL_CERT_DIR='/etc/pki/tls/certs'
 
+
 - name: Generate session secret
   shell: openssl rand -base64 32 > /etc/ckan/default/session_secret
     creates=/etc/ckan/default/session_secret
   when: not ansible_check_mode
-
+  
 
 - name: Read session secret
   command: cat /etc/ckan/default/session_secret
   register: session_secret
   changed_when: false
-
+  
 
 - name: Generate unique application instance identifier
   shell: 'echo {{ hostname | to_uuid }} > /etc/ckan/default/app_instance_uuid
@@ -228,6 +232,7 @@
     src: "configuration.ini.j2"
     dest: "/etc/ckan/default/{{ epos_msl_environment }}.ini"
   notify: Restart Apache webserver
+  register: CkanConf
 
 
 - name: Ensure CKAN schema is symlinked in Solr
@@ -256,12 +261,13 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-harvest.git@{{ ckanext_harvest_version }}#egg=ckanext-harvest
+    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-harvest.git@{{ ckan_harvest_branch }}#egg=ckanext-harvest
     cd /usr/lib/ckan/default/src/ckanext-harvest/
     pip install -r pip-requirements.txt
     exit
     creates=/usr/lib/ckan/default/src/ckanext-harvest/
   notify: Restart Apache webserver
+
 
 - name: Install CKAN syngenta extension
   become_user: root
@@ -270,20 +276,20 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install --exists-action s -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/syngenta-theme.git#egg=ckanext-syngenta
+    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/syngenta-theme.git@{{ syngenta_theme_branch }}#egg=syngenta-theme
     exit
   notify: Restart Apache webserver
 
-#- name: Install CKAN Social extension
-#  become_user: root
-#  become: yes
-#  shell: |
-#    su -s /bin/bash - ckan
-#    cd /usr/lib/ckan
-#    . default/bin/activate
-#    pip install -e git+https://github.com/okfn/ckanext-social#egg=ckanext-social
-#    exit
-#  notify: Restart Apache webserver
+- name: Install CKAN Social extension
+  become_user: root
+  become: yes
+  shell: |
+    su -s /bin/bash - ckan
+    cd /usr/lib/ckan
+    . default/bin/activate
+    pip install -e git+https://github.com/okfn/ckanext-social#egg=ckanext-social
+    exit
+  notify: Restart Apache webserver
 
 
 - name: Install CKAN Spatial extension
@@ -293,10 +299,11 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install --exists-action s -e "git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-spatial.git#egg=ckanext-spatial"
+    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-spatial.git@{{ ckanext_spatial_branch }}#egg=ckanext-spatial
     pip install -r /usr/lib/ckan/default/src/ckanext-spatial/pip-requirements.txt
     exit
   notify: Restart Apache webserver
+
 
 - name: Install CKAN Geoview extension
   become_user: root
@@ -309,6 +316,7 @@
     exit
   notify: Restart Apache webserver
 
+
 - name: Install CKAN Datarequests extension
   become_user: root
   become: yes
@@ -320,6 +328,7 @@
     exit
   notify: Restart Apache webserver
 
+
 - name: Install CKAN OAuth2 extension
   become_user: root
   become: yes
@@ -327,9 +336,10 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install --exists-action s -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-oauth2.git#egg=ckanext-oauth2
+    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-oauth2.git@{{ ckanext_oauth2_branch }}#egg=ckanext-oauth2
     exit
   notify: Restart Apache webserver
+
 
 - name: Install CKAN Scheming extension
   become_user: root
@@ -338,10 +348,11 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install --exists-action s -e git+http://oauth2:6qyy1m-xXk4g4BLB5Q2u@mintgitlab.syngentaaws.org/GISPlatform/gris/ckanext-scheming.git#egg=ckanext-scheming
+    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-scheming.git@{{ ckanext_scheming_branch }}#egg=ckanext-scheming
     pip install -r /usr/lib/ckan/default/src/ckanext-scheming/requirements.txt
     exit
   notify: Restart Apache webserver
+
 
 - name: Ensure latest version of CKAN harvest extension is installed
   become_user: root
@@ -352,6 +363,7 @@
     version: "{{ ckanext_harvest_version }}"
     update: "yes"
   notify: Restart Apache webserver
+
 
 - name: Initialize CKAN database
   become_user: ckan
@@ -364,12 +376,6 @@
     exit
   when: ckan_installed.changed
 
-#- name: Set datastore permissions
-#  become: yes
-#  shell: |
-#    . /usr/lib/ckan/default/bin/activate
-#    paster --plugin=ckan datastore set-permissions -c /etc/ckan/default/development.ini | sudo -u postgres psql
-#    exit
 
 - name: Check if CKAN admin user exists
   become_user: ckan
@@ -431,7 +437,7 @@
 
 - name: Ensure EPOS-MSL virtual host config for Apache is present
   template:
-    src: "epos-msl-vhost.conf.j2"
+    src: "epos-msl-vhost.conf.j2"    #dest: "/etc/httpd/conf.d/epos-msl-vhost.conf"
     dest: "/etc/httpd/conf.d/epos-msl-vhost.conf"
   notify: Restart Apache webserver
 
