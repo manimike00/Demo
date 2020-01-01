@@ -23,13 +23,20 @@
     epos_msl_version: development
     epos_msl_fqdn:  gris-dev.syngentaaws.org                           # fully qualified domain name (FQDN)
     epos_msl_environment: development                              # environment: development, testing, acceptance or production
+    ckan_branch: ckan-2.7.3 
+    ckanext_oauth2_branch: master 
+    ckanext_scheming_branch: master 
+    ckanext_spatial_branch: master
+    syngenta_theme_branch: Dev
+    ckan_harvest_branch: 65e3163015079f425805a6b35458b1b1bf6d0ce0 
+     
   become: yes
   roles:
-    - common
-    - certificates
-    - apache
-    - postgresql
-    - solr
-    - redis
-    - ckan
-    - ckan-harvester
+    - {role: 'common',          tags: 'role_common'}
+    - {role: 'certificates',    tags: 'role_certificates'}
+    - {role: 'apache',          tags: 'role_apache'}
+    - {role: 'postgresql',      tags: 'role_postgresql'}
+    - {role: 'solr',            tags: 'role_solr'}
+    - {role: 'redis',           tags: 'role_redis'}
+    - {role: 'ckan',            tags: 'role_ckan'}
+    - {role: 'ckan-harvester',  tags: 'role_ckan-harvester'}
