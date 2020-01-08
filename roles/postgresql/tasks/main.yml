@@ -8,17 +8,19 @@
   with_items:
     - postgresql-server
     - postgresql-contrib
-
+  tags: role_postgresql
 
 - name: Ensure dependencies for Ansible PostgreSQL module are installed
   package:
     name: python-psycopg2
     state: present
+  tags: role_postgresql
 
 
 - name: Initialize PostgreSQL database
   command: postgresql-setup initdb
     creates=/var/lib/pgsql/data/postgresql.conf
+  tags: role_postgresql
 
 
 - name: Password protect loopback IPv4 connections
@@ -27,6 +29,7 @@
     regexp: 'host\s+all\s+all\s+127.0.0.1/32'
     line: 'host all all 127.0.0.1/32 md5'
   notify: Restart PostgreSQL
+  tags: role_postgresql
 
 
 - name: Password protect loopback IPv6 connections
@@ -35,6 +38,7 @@
     regexp: 'host\s+all\s+all\s+::1/128'
     line: 'host all all ::1/128 md5'
   notify: Restart PostgreSQL
+  tags: role_postgresql
 
 
 - name: Listen on all interfaces
@@ -42,6 +46,7 @@
     dest: /var/lib/pgsql/data/postgresql.conf
     line: "listen_addresses = '*'"
   notify: Restart PostgreSQL
+  tags: role_postgresql
 
 
 - name: Ensure private key file is available for PostgreSQL
@@ -49,6 +54,7 @@
   args:
     chdir: '/var/lib/pgsql/data'
     creates: '{{ openssl_key_signed }}'
+  tags: role_postgresql
 
 
 - name: Ensure certificate file is available for PostgreSQL
@@ -56,6 +62,7 @@
   args:
     chdir: '/var/lib/pgsql/data'
     creates: '{{ openssl_crt_signed }}'
+  tags: role_postgresql
 
 
 - name: Ensure PostgreSQL has access to PKI files
@@ -68,6 +75,7 @@
   with_items:
     - '/var/lib/pgsql/data/{{ openssl_key_signed }}'
     - '/var/lib/pgsql/data/{{ openssl_crt_signed }}'
+  tags: role_postgresql
 
 
 - name: Ensure PostgreSQL is configured to use SSL
@@ -87,6 +95,7 @@
     - option: ssl_ciphers
       value: "'AES128+EECDH:AES128+EDH'"
   notify: Restart PostgreSQL
+  tags: role_postgresql
 
 
 - name: Ensure PostgreSQL is enabled and started
@@ -94,3 +103,5 @@
     name: postgresql
     enabled: yes
     state: started
+  tags: role_postgresql
+

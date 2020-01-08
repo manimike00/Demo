@@ -1,24 +1,22 @@
 ---
 # This playbook deploys a complete CKAN instance.
 
-- hosts: all
-  connection: local
-  gather_facts: true
-  vars:
-    ansible_ssh_private_key_file: ./vagrant/ssh/vagrant
-  pre_tasks:
-    - name: Verify Ansible version meets requirements
-      assert:
-        that: "ansible_version.full is version_compare('2.4', '>=')"
-        msg: >
-          "You must update Ansible to at least 2.4 to deploy EPOS CKAN."
-
+#- hosts: all
+#  connection: local
+#  vars:
+#    ansible_ssh_private_key_file: ./vagrant/ssh/vagrant
+#  pre_tasks:
+#    - name: Verify Ansible version meets requirements
+#      assert:
+#        that: "ansible_version.full is version_compare('2.4', '>=')"
+#        msg: >
+#          "You must update Ansible to at least 2.4 to deploy EPOS CKAN."
+#
 
 - name: Provision CKAN server
   hosts: all
   connection: local
   become: true
-  gather_facts: true
   vars:
     ckan_database_password: test                           # CKAN Postgresql database password
     ckan_admin_password: test                                      # CKAN admin user ('ckanadmin') password
@@ -33,11 +31,11 @@
     syngenta_theme_branch: Dev
     ckan_harvest_branch: 65e3163015079f425805a6b35458b1b1bf6d0ce0 
   roles:
-    - { role: common,          tags: ['role_common'] }
-    - { role: certificates,    tags: ['role_certificates'] }
-    - { role: apache,          tags: ['role_apache'] }
-    - { role: postgresql,      tags: ['role_postgresql'] }
-    - { role: solr,            tags: ['role_solr'] }
-    - { role: redis,           tags: ['role_redis'] }
-    - { role: ckan,            tags: ['role_ckan']  }
-    - { role: ckan-harvester,  tags: ['role_ckan_harvester'] }
+    - { role: 'common',          tags: role_common }
+    - { role: 'certificates',    tags: role_certificates }
+    - { role: 'apache',          tags: role_apache }
+    - { role: 'postgresql',      tags: role_postgresql }
+    - { role: 'solr',            tags: role_solr }
+    - { role: 'redis',           tags: role_redis }
+    - { role: 'ckan',            tags: role_ckan }
+    - { role: 'ckan-harvester',  tags: role_ckan-harvester }

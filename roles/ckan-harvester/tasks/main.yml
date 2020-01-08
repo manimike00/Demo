@@ -5,12 +5,14 @@
   package:
     name: supervisor
     state: present
+  tags: role_ckan_harvester
 
 
 - name: Ensure Supervisor configuration for CKAN harvesting is present
   template:
     src: "ckan_harvesting.ini.j2"
     dest: "/etc/supervisord.d/ckan_harvesting.ini"
+  tags: role_ckan_harvester
 
 
 - name: Ensure CKAN log directories exist
@@ -22,6 +24,7 @@
   with_items:
     - /var/log/ckan
     - /var/log/ckan/std
+  tags: role_ckan_harvester
 
 
 - name: Ensure Supervisor is started and enabled on boot
@@ -29,6 +32,7 @@
     name: supervisord
     state: started
     enabled: yes
+  tags: role_ckan_harvester
 
 
 - name: Add Supervisor ckan_gather_consumer task
@@ -41,3 +45,4 @@
   supervisorctl:
     name: ckan_fetch_consumer
     state: present
+  tags: role_ckan_harvester

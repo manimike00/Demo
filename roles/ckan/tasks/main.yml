@@ -25,12 +25,14 @@
     - policycoreutils-python
     - mod_wsgi
     - httpd
+  tags: role_ckan
 
 
 - name: Ensure a 'wheel' group exists
   group:
     name: wheel
     state: present
+  tags: role_ckan
 
 
 - name: Allow 'wheel' group to have passwordless sudo
@@ -40,6 +42,7 @@
     regexp: '^%wheel'
     line: '%wheel ALL=(ALL) NOPASSWD: ALL'
     validate: visudo -cf %s
+  tags: role_ckan
 
 
 - name: Ensure CKAN user exists
@@ -50,6 +53,7 @@
     shell: /bin/bash
     groups: wheel
     append: yes
+  tags: role_ckan
 
 
 - name: Ensure CKAN database exists
@@ -61,7 +65,7 @@
     lc_collate: en_US.utf8
     lc_ctype: en_US.utf8
     template: template0
-
+  tags: role_ckan
 
 - name: Ensure CKAN database user exists
   become_user: postgres
@@ -71,6 +75,7 @@
     name: "ckan_default"
     password: "{{ ckan_database_password }}"
     priv: ALL
+  tags: role_ckan
 
 
 - name: Allow Apache to connect to Postgresql
@@ -78,6 +83,7 @@
     name: httpd_can_network_connect_db
     state: yes
     persistent: yes
+  tags: role_ckan
 
 
 - name: Allow Apache to connect to Redis and SOLR
@@ -85,6 +91,7 @@
     name: httpd_can_network_connect
     state: yes
     persistent: yes
+  tags: role_ckan
 
 
 - name: Allow Apache to listen on port 8983 for Solr
@@ -93,6 +100,7 @@
     proto: tcp
     setype: http_port_t
     state: present
+  tags: role_ckan
 
 
 - name: Ensure CKAN directories exist
@@ -106,7 +114,7 @@
     - /usr/lib/ckan/default
     - /etc/ckan
     - /etc/ckan/default
-
+  tags: role_ckan
 
 - name: Run CKAN installation script
   become_user: ckan
@@ -120,6 +128,7 @@
     exit
     creates=/usr/lib/ckan/default/src/ckan/ckan/config/solr/schema.xml
   register: ckan_installed
+  tags: role_ckan
 
 
 - name: Set ENV Vars
@@ -128,11 +137,12 @@
     cd /usr/lib/ckan/
     . default/bin/activate
     export REQUESTS_CA_BUNDLE='/etc/pki/tls/certs/ca-bundle.crt'
-
+  tags: role_ckan
 
 - name: Add ENV Vars to sysconfig for httpd
   become: yes
   shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/configfile
+  tags: role_ckan
 
 
 - name: look for schema folder
@@ -140,43 +150,48 @@
   become: yes
   stat: path=/usr/lib/ckan/default/src/ckanext-scheming/ckanext/scheming
   register: path
-
+  tags: role_ckan
 
 - name: Make schma dir
   become_user: root
   become: yes
   shell: mkdir /usr/lib/ckan/default/src/ckanext-scheming/ckanext/scheming
   when: not path.stat.exists
+  tags: role_ckan
 
 
 - name: Move over metadata schema
   template:
     src: "syngenta.json"
     dest: "/usr/lib/ckan/default/src/ckanext-scheming/ckanext/scheming"
+  tags: role_ckan
 
 
 - name: Generate session secret
   shell: openssl rand -base64 32 > /etc/ckan/default/session_secret
     creates=/etc/ckan/default/session_secret
   when: not ansible_check_mode
+  tags: role_ckan
   
 
 - name: Read session secret
   command: cat /etc/ckan/default/session_secret
   register: session_secret
   changed_when: false
-  
+  tags: role_ckan  
+
 
 - name: Generate unique application instance identifier
   shell: 'echo {{ hostname | to_uuid }} > /etc/ckan/default/app_instance_uuid
     creates=/etc/ckan/default/app_instance_uuid'
   when: not ansible_check_mode
-
+  tags: role_ckan
 
 - name: Read unique application instance identifier
   command: cat /etc/ckan/default/app_instance_uuid
   register: app_instance_uuid
   changed_when: false
+  tags: role_ckan
 
 
 - name: Ensure CKAN config is present
@@ -185,7 +200,7 @@
     dest: "/etc/ckan/default/{{ epos_msl_environment }}.ini"
   notify: Restart Apache webserver
   register: CkanConf
-
+  tags: role_ckan
 
 - name: Ensure CKAN schema is symlinked in Solr
   become_user: root
@@ -214,7 +229,8 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-harvest.git@{{ ckan_harvest_branch }}#egg=ckanext-harvest
+    #pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-harvest.git@{{ ckan_harvest_branch }}#egg=ckanext-harvest
+    pip install --ignore-installed -e git+https://github.com/ckan/ckan.git@ckan-2.7.3#egg=ckan
     cd /usr/lib/ckan/default/src/ckanext-harvest/
     pip install -r pip-requirements.txt
     exit
@@ -295,17 +311,17 @@
   notify: Restart Apache webserver
 
 
-- name: Install CKAN Scheming extension
-  become_user: root
-  become: yes
-  shell: |
-    su -s /bin/bash - ckan
-    cd /usr/lib/ckan
-    . default/bin/activate
-    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-scheming.git@{{ ckanext_scheming_branch }}#egg=ckanext-scheming
-    pip install -r /usr/lib/ckan/default/src/ckanext-scheming/requirements.txt
-    exit
-  notify: Restart Apache webserver
+#- name: Install CKAN Scheming extension
+#  become_user: root
+#  become: yes
+#  shell: |
+#    su -s /bin/bash - ckan
+#    cd /usr/lib/ckan
+#    . default/bin/activate
+#    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-scheming.git@{{ ckanext_scheming_branch }}#egg=ckanext-scheming
+#    pip install -r /usr/lib/ckan/default/src/ckanext-scheming/requirements.txt
+#    exit
+#  notify: Restart Apache webserver
 
 
 - name: Ensure latest version of CKAN harvest extension is installed
@@ -330,7 +346,6 @@
     exit
   when: ckan_installed.changed
 
-
 - name: Check if CKAN admin user exists
   become_user: ckan
   become: yes
@@ -341,7 +356,6 @@
     exit
   changed_when: False
   register: ckan_admin_user
-
 
 - name: Add CKAN admin user
   become_user: ckan
