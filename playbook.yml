@@ -16,7 +16,7 @@
 
 - name: Provision CKAN server
   hosts: all
-  connection: local
+  connection: ssh
   become: true
   gather_facts: true
   vars:
@@ -39,5 +39,5 @@
     - { role: postgresql,      tags: ['role_postgresql'] }
     - { role: solr,            tags: ['role_solr'] }
     - { role: redis,           tags: ['role_redis'] }
-    - { role: ckan,            tags: ['role_ckan']  }
+    - { role: ckan,            tags: ['ckan']  }
     - { role: ckan-harvester,  tags: ['role_ckan_harvester'] }

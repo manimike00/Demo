@@ -3,7 +3,7 @@
   package:
     name: pyOpenSSL
     state: present
-  tags: role_certificates
+
 
 
 - name: Ensure OpenSSL 4096 bits RSA private key is present
@@ -13,7 +13,7 @@
     type: RSA
     force: False
     state: present
-  tags: role_certificates
+
 
 
 - name: Ensure OpenSSL certificate signing request is present
@@ -26,7 +26,7 @@
   args:
     chdir: '{{ openssl_certs_dir }}'
     creates: '{{ openssl_csr_selfsigned }}'
-  tags: role_certificates
+
 
 
 - name: Ensure OpenSSL self signed certificate is present
@@ -38,7 +38,7 @@
   args:
     chdir: '{{ openssl_certs_dir }}'
     creates: '{{ openssl_crt_selfsigned }}'
-  tags: role_certificates
+
 
 
 - name: Ensure OpenSSL signed private key is present
@@ -47,7 +47,7 @@
     '{{ openssl_private_dir }}/{{ openssl_key_signed }}'
   args:
     creates: '{{ openssl_private_dir }}/{{ openssl_key_signed }}'
-  tags: role_certificates
+
 
 
 - name: Ensure OpenSSL signed certificate is present
@@ -56,7 +56,7 @@
     '{{ openssl_certs_dir }}/{{ openssl_crt_signed }}'
   args:
     creates: '{{ openssl_certs_dir }}/{{ openssl_crt_signed }}'
-  tags: role_certificates
+
 
 
 - name: Ensure Diffie-Hellman parameters are generated
@@ -64,5 +64,5 @@
   args:
     chdir: '{{ openssl_private_dir }}'
     creates: '{{ openssl_private_dir }}/{{ openssl_dhparams }}'
-  tags: role_certificates
+
 
