@@ -10,13 +10,13 @@
     - java-1.8.0-openjdk-devel
     - unzip
     - lsof
-  tags: role_solr
+
  
 - name: Check if Solr is installed
   stat:
     path: /opt/solr
   register: solr_installed
-  tags: role_solr
+
 
 
 - name: Download Solr 6.5.1 archive
@@ -27,7 +27,7 @@
     force: no
   when: solr_installed.stat.isdir is not defined
   register: solr_downloaded
-  tags: role_solr
+
 
 
 - name: Expand Solr archive
@@ -36,14 +36,14 @@
     dest: ~/
     copy: no
   when: solr_downloaded.changed
-  tags: role_solr
+
 
 
 - name: Run Solr installation script
   shell: ~/solr-6.5.1/bin/install_solr_service.sh ~/solr-6.5.1.tgz
     creates=/opt/solr/bin/solr
   register: solr_installed
-  tags: role_solr
+
 
 
 - name: Remove the Solr installation files
@@ -53,7 +53,7 @@
   with_items:
     - ~/solr-6.5.1.tgz
     - ~/solr-6.5.1/
-  tags: role_solr
+
 
 
 - name: Create Solr CKAN configuration
@@ -61,21 +61,21 @@
   shell: /opt/solr/bin/solr create -c ckan
     creates=/var/solr/data/ckan/conf/solrconfig.xml
   when: solr_installed.changed
-  tags: role_solr
+
 
 
 - name: Ensure managed-schema is absent
   file:
     path: '/var/solr/data/ckan/conf/managed-schema'
     state: absent
-  tags: role_solr
+
 
 
 - name: Ensure solrconfig.xml for CKAN is present
   template:
     src: "solrconfig.xml.j2"
     dest: "/var/solr/data/ckan/conf/solrconfig.xml"
-  tags: role_solr
+
 
 
 - name: Ensure Solr is stopped
@@ -83,7 +83,7 @@
     name: solr
     state: stopped
   when: solr_installed.changed
-  tags: role_solr
+
 
 
 - name: Ensure Solr deamon is reloaded
@@ -91,12 +91,12 @@
     name: solr
     daemon_reload: yes
   when: solr_installed.changed
-  tags: role_solr
+
 
 
 - name: Ensure Solr is enabled on boot
   service:
     name: solr
     enabled: yes
-  tags: role_solr
+
 

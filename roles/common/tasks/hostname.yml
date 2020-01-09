@@ -5,9 +5,9 @@
   command: 'hostname --fqdn'
   register: hostname
   changed_when: hostname.stdout.find(inventory_hostname) == -1
-  tags: role_common
+
 
 - name: Ensure FQDN is defined as hostname in /etc/hosts
   command: hostnamectl set-hostname {{ inventory_hostname }}
   changed_when: hostname.stdout.find(inventory_hostname) == -1
-  tags: role_common
+

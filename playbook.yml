@@ -1,13 +1,9 @@
 ---
 # This playbook deploys a complete CKAN instance.
 
-<<<<<<< HEAD
 - hosts: solr
-=======
-- hosts: all
   connection: local
   gather_facts: true
->>>>>>> With staged files this time
   vars:
     ansible_ssh_private_key_file: 
   become: yes
@@ -17,7 +13,8 @@
     - apache
     - solr
 
-- hosts: ckan
+- name: Provision CKAN server
+  hosts: ckan
   connection: local
   become: true
   gather_facts: true
@@ -44,5 +41,5 @@
     - { role: postgresql,      tags: ['role_postgresql'] }
     - { role: solr,            tags: ['role_solr'] }
     - { role: redis,           tags: ['role_redis'] }
-    - { role: ckan,            tags: ['role_ckan']  }
+    - { role: ckan,            tags: ['ckan']  }
     - { role: ckan-harvester,  tags: ['role_ckan_harvester'] }

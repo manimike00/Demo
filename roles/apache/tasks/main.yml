@@ -9,7 +9,7 @@
   - httpd
   - mod_ssl
   - openssl
-  tags: role_apache
+
 
 
 - name: Ensure customized httpd config is present
@@ -18,7 +18,7 @@
     dest: '/etc/httpd/conf/httpd.conf'
     mode: 0600
   notify: Restart Apache webserver
-  tags: role_apache
+
 
 
 - name: Ensure customized SSL config is present
@@ -27,7 +27,7 @@
     dest: '/etc/httpd/conf.d/ssl.conf'
     mode: 0600
   notify: Restart Apache webserver
-  tags: role_apache
+
 
 
 - name: Ensure autoindex.conf is absent
@@ -37,9 +37,9 @@
   notify: Restart Apache webserver
   with_items:
   - /etc/httpd/conf.d/autoindex.conf
-  tags: role_apache
+
 
 - name: Allow execution of files in /temp
   become: yes
   shell: /usr/sbin/setsebool httpd_tmp_exec on
-  tags: role_apache
+
