@@ -144,6 +144,18 @@
   shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/configfile
 
 
+- name: Install CKAN Scheming extension
+  become_user: root
+  become: yes
+  shell: |
+    su -s /bin/bash - ckan
+    cd /usr/lib/ckan
+    . default/bin/activate
+    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-scheming.git@{{ ckanext_scheming_branch }}#egg=ckanext-scheming
+    pip install -r /usr/lib/ckan/default/src/ckanext-scheming/requirements.txt
+    exit
+  notify: Restart Apache webserver
+
 
 - name: look for schema folder
   become_user: root
@@ -311,17 +323,6 @@
   notify: Restart Apache webserver
 
 
-#- name: Install CKAN Scheming extension
-#  become_user: root
-#  become: yes
-#  shell: |
-#    su -s /bin/bash - ckan
-#    cd /usr/lib/ckan
-#    . default/bin/activate
-#    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-scheming.git@{{ ckanext_scheming_branch }}#egg=ckanext-scheming
-#    pip install -r /usr/lib/ckan/default/src/ckanext-scheming/requirements.txt
-#    exit
-#  notify: Restart Apache webserver
 
 
 - name: Ensure latest version of CKAN harvest extension is installed
