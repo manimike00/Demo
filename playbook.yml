@@ -20,13 +20,14 @@
   gather_facts: true
   vars:
     solr_url: localhost
+    ckan_database_password: test 
     database_username:
     database_password:                                 # CKAN Postgresql database password
     database_url: 
     ckan_admin_password: test                                      # CKAN admin user ('ckanadmin') password
     ckan_harvest_password: test                                    # CKAN harvest user ('harvest') password
     epos_msl_version: development
-    epos_msl_fqdn:  gris.syngentaaws.org                           # fully qualified domain name (FQDN)
+    epos_msl_fqdn:  gris-dev.syngentaaws.org                           # fully qualified domain name (FQDN)
     epos_msl_environment: development                              # environment: development, testing, acceptance or production
     ckan_branch: ckan-2.7.3 
     ckanext_oauth2_branch: master 

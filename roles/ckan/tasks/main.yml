@@ -72,7 +72,7 @@
   postgresql_user:
     db: "ckan_default"
     name: "ckan_default"
-    password: "{{ database_password }}"
+    password: "{{ ckan_database_password }}"
     priv: ALL
 
 
