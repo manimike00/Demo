@@ -114,7 +114,6 @@
     - /etc/ckan
     - /etc/ckan/default
     - /var/lib/ckan
-  tags: role_ckan
 
 - name: Run CKAN installation script
   become_user: ckan
@@ -142,7 +141,6 @@
 - name: Add ENV Vars to sysconfig for httpd
   become: yes
   shell:  echo 'REQUESTS_CA_BUNDLE="'"/etc/pki/tls/certs/ca-bundle.crt"'"' >> /etc/sysconfig/httpd
-  tags: role_ckan
 
 - name: Install CKAN Scheming extension
   become_user: root
