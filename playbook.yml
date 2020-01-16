@@ -19,7 +19,7 @@
   become: true
   gather_facts: true
   vars:
-    solr_url: 
+    solr_url: localhost
     database_username:
     database_password:                                 # CKAN Postgresql database password
     database_url: 
