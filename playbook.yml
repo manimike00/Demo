@@ -21,7 +21,7 @@
   vars:
     solr_url: localhost
     ckan_database_password: test 
-    database_username: ckan_default
+    database_username: gisadmin
     database_password: Syn-Aur-Dev                               # CKAN Postgresql database password
     database_url: deawdaurgisd002-cluster.cluster-c0teethmpf9v.eu-central-1.rds.amazonaws.com
     ckan_admin_password: test                                      # CKAN admin user ('ckanadmin') password
