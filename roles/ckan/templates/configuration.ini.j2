@@ -51,7 +51,7 @@ who.secure =  true
 ## Database Settings
 sqlalchemy.url = postgresql://{{ database_username }}:{{ database_password }}@{{database_url }}/ckan_default
 
-ckan.datastore.write_url = postgresql://ckan_default:ckan@{{ database_url }}/datastore_default
+ckan.datastore.write_url = postgresql://{{ database_username }}:{{ database_password }}@{{ database_url }}/datastore_default
 ckan.datastore.read_url = postgresql://datastore_default:datastore@{{ database_url  }}/datastore_default
 
 # PostgreSQL' full-text search parameters
