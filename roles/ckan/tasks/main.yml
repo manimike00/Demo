@@ -438,8 +438,8 @@
     exit
   when: '"name=harvest" not in ckan_admin_user.stdout'
 
-- name: Sync solr schema across hosts
-  command: sudo rsync --inplace -e "ssh -i /home/centos/prod-ec2-ssh-rsa.pem" /usr/lib/ckan/default/src/ckan/ckan/config/solr/schema.xml centos@10.55.1.177:/var/solr/data/ckan/conf/
+# - name: Sync solr schema across hosts
+  # command: sudo rsync --inplace -e "ssh -i /home/centos/prod-ec2-ssh-rsa.pem" /usr/lib/ckan/default/src/ckan/ckan/config/solr/schema.xml centos@{{ solr_url }}:/var/solr/data/ckan/conf/
 
 
 - name: Ensure WSGI specification for CKAN is present
