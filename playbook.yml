@@ -21,9 +21,9 @@
   vars:
     solr_url: localhost
     ckan_database_password: test 
-    database_username:
-    database_password:                                 # CKAN Postgresql database password
-    database_url: 
+    database_username: ckan_default
+    database_password: Syn-Aur-Dev                               # CKAN Postgresql database password
+    database_url: deawdaurgisd002-cluster.cluster-c0teethmpf9v.eu-central-1.rds.amazonaws.com
     ckan_admin_password: test                                      # CKAN admin user ('ckanadmin') password
     ckan_harvest_password: test                                    # CKAN harvest user ('harvest') password
     epos_msl_version: development
