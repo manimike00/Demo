@@ -3,10 +3,22 @@
 localhost
 
 [solr]
-localhost
+10.55.1.177
 
 
 [ckan:vars]
-
+solr_url=10.55.1.177
+ckan_database_password= 
+database_username=
+database_password=                              
+database_url=deawdaurgisd002-cluster.cluster-c0teethmpf9v.eu-central-1.rds.amazonaws.com
+ckan_admin_password=test                                   
+ckan_harvest_password=test                                 
+epos_msl_version=development
+epos_msl_fqdn=gris.syngentaaws.org                     
+epos_msl_environment=development            
+ckan_oauth2_client_id=
+ckan_oauth2_client_secret=
 
 [solr:vars]
+ansible_ssh_private_key_file=~/prod-ec2-ssh-rsa.pem
