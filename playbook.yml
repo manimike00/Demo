@@ -1,7 +1,8 @@
 ---
 # This playbook deploys a complete CKAN instance.
 
-- hosts: solr
+- name: Provision SOLR server
+  hosts: solr
   connection: local
   gather_facts: true
   vars:
@@ -19,16 +20,6 @@
   become: true
   gather_facts: true
   vars:
-    solr_url: localhost
-    ckan_database_password: test 
-    database_username: gisadmin
-    database_password: Syn-Aur-Dev                               # CKAN Postgresql database password
-    database_url: deawdaurgisd002-cluster.cluster-c0teethmpf9v.eu-central-1.rds.amazonaws.com
-    ckan_admin_password: test                                      # CKAN admin user ('ckanadmin') password
-    ckan_harvest_password: test                                    # CKAN harvest user ('harvest') password
-    epos_msl_version: development
-    epos_msl_fqdn:  gris-dev.syngentaaws.org                           # fully qualified domain name (FQDN)
-    epos_msl_environment: development                              # environment: development, testing, acceptance or production
     ckan_branch: ckan-2.7.3 
     ckanext_oauth2_branch: master 
     ckanext_scheming_branch: master 

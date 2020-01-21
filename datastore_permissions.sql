@@ -24,7 +24,6 @@ over SSH:
 -- PERMISSIONS applies to the current database, and so we must be connected to
 -- the datastore DB:
 \connect "datastore_default"
-
 -- revoke permissions for the read-only user
 REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;

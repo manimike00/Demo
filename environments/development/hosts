@@ -4,3 +4,22 @@ localhost
 
 [solr]
 localhost
+
+
+[ckan:vars]
+solr_url=localhost
+ckan_database_password=test 
+database_username=gisadmin
+database_password=Syn-Aur-Dev                               # CKAN Postgresql database password
+database_url=deawdaurgisd002-cluster.cluster-c0teethmpf9v.eu-central-1.rds.amazonaws.com
+ckan_admin_password=test                                      # CKAN admin user ('ckanadmin') password
+ckan_harvest_password=test                                    # CKAN harvest user ('harvest') password
+epos_msl_version=development
+epos_msl_fqdn=gris-dev.syngentaaws.org                           # fully qualified domain name (FQDN)
+epos_msl_environment=development                 # environment: development, testing,acceptance or production
+ckan_oauth2_client_id=817b4cfc-197a-44da-8090-d101df02e456
+ckan_oauth2_client_secret=R+otkpf8r8CJKJ7spiYEBN00TFb/yNGkSaDoTO7paEw=
+
+
+
+[solr:vars]

@@ -1,0 +1,12 @@
+# Define all hosts in instance here:
+[ckan]
+localhost
+
+[solr]
+localhost
+
+
+[ckan:vars]
+
+
+[solr:vars]
