@@ -123,7 +123,7 @@
     . default/bin/activate
     pip install --upgrade pip
     pip install -U setuptools
-    pip install --ignore-installed -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckan.git@{{ ckan_branch }}#egg=ckan
+    pip install --ignore-installed -e git+ssh://git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckan.git@{{ ckan_branch }}#egg=ckan
     exit
     creates=/usr/lib/ckan/default/src/ckan/ckan/config/solr/schema.xml
   register: ckan_installed
@@ -149,7 +149,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-scheming.git@{{ ckanext_scheming_branch }}#egg=ckanext-scheming
+    pip install -e git+ssh://git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckanext-scheming.git@{{ ckanext_scheming_branch }}#egg=ckanext-scheming
     pip install -r /usr/lib/ckan/default/src/ckanext-scheming/requirements.txt
     exit
   notify: Restart Apache webserver
@@ -287,7 +287,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    #pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-harvest.git@{{ ckan_harvest_branch }}#egg=ckanext-harvest
+    #pip install -e git+ssh://git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckanext-harvest.git@{{ ckan_harvest_branch }}#egg=ckanext-harvest
     pip install --ignore-installed -e git+https://github.com/ckan/ckan.git@ckan-2.7.3#egg=ckan
     cd /usr/lib/ckan/default/src/ckanext-harvest/
     pip install -r pip-requirements.txt
@@ -303,7 +303,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/syngenta-theme.git@{{ syngenta_theme_branch }}#egg=syngenta-theme
+    pip install -e git+ssh://git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/syngenta-theme.git@{{ syngenta_theme_branch }}#egg=syngenta-theme
     exit
   notify: Restart Apache webserver
 
@@ -326,7 +326,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-spatial.git@{{ ckanext_spatial_branch }}#egg=ckanext-spatial
+    pip install -e git+ssh://git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckanext-spatial.git@{{ ckanext_spatial_branch }}#egg=ckanext-spatial
     pip install -r /usr/lib/ckan/default/src/ckanext-spatial/pip-requirements.txt
     exit
   notify: Restart Apache webserver
@@ -363,7 +363,7 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install -e git+ssh://git@git.syngentaaws.org/dda/platforms/GISPlatform/gris/ckanext-oauth2.git@{{ ckanext_oauth2_branch }}#egg=ckanext-oauth2
+    pip install -e git+ssh://git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckanext-oauth2.git@{{ ckanext_oauth2_branch }}#egg=ckanext-oauth2
     exit
   notify: Restart Apache webserver
 
