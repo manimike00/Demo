@@ -12,33 +12,45 @@
 ### Managed node requirements
 * [CentOS](https://www.centos.org/) (>= 7.3)
 
-## Deploying CKAN development instance (Non Local Development)
+## Deploying CKAN on development instance (Non Local Development)
 
-In the hosts file (environment/development/hosts)
-```
-[all]
-<host address>
-```
-
-Set the variable epos_msl_fqdn (in playbook.yml) to the same value as the host
-(or the domain name if available):
-```
-epos_msl_fqdn: <host address> OR <domain name>
+1. [Ignore if already cloned] Run the below command to clone the ckanDeploy on the development CKAN server under dev directory.
+```bash
+cd ~/dev; git clone git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckandeploy.git
 ```
 
-Update the playbook to use the vagrant credentials by switching remote_user
-in the ansible.cfg file (under defaults) to the ssh username
-```
-remote_user = <username>
+2. Run below command to checkout latest deployment code for development environment 
+```bash
+git checkout rebase-dev-from-master; git pull -r
 ```
 
-In the primary playbook in the top directory add an security configurations
-under the ansible_ssh_private_key_file if necessary
- ```
-ansible_ssh_private_key_file: ~/Path/To/Keys.rsa
- ```
+3. Run the playbook using the following commands
+```bash
+ansible-playbook playbook.yml -i environment/development/hosts
+```
 
-Deploy ckan to development virtual machine:
+## Deploying CKAN on production instance
+
+*Note:* You should create a branch named _release-<release_version>_ from the _rebase-dev-from-master_ which has changes required to be deployed on production. For example, release-0.1.0.
+
+1. [Ignore if already cloned] Run the below command to clone the ckanDeploy on the production CKAN server under prod directory.
+```bash
+cd ~/prod; git clone git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckandeploy.git
+```
+
+2. Run below command to checkout latest deployment code for production environment 
+```bash
+git checkout release-<release_version>; git pull -r
+```
+3. Provide the production database and oauth_2 credentials in vars section in the file _environments/production/hosts_
+
+4. Run the playbook using the following commands
+```bash
+ansible-playbook playbook.yml -i environment/production/hosts
+```
+
+
+## Deploy ckan to development virtual machine:
 ```bash
 ansible-playbook playbook.yml
 ```
