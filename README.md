@@ -1,4 +1,3 @@
-# **** THIS README IS OUTDATED SEE the syngenta_ckan_guide FOR INSTRUCTIONS ****
 
 # CKAN deployment on CentOS 7
 [Ansible](https://docs.ansible.com) scripts for automatic deployment of CKAN
