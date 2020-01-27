@@ -331,12 +331,12 @@
     cd /usr/lib/ckan
     . default/bin/activate
     pip install -e git+git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/{{ item.extension_name}}.git@{{ item.extension_branch }}#egg={{ item.extension_name }}
-    pip install -r /usr/lib/ckan/default/src/{{ item.extension_name}}/requirements.txt
+    pip install -r /usr/lib/ckan/default/src/{{ item.extension_name }}/{{ requirements_file }}
     exit
   with_items: 
-    - {extension_name: ckanext-scheming, extension_branch: "{{ ckanext_scheming_branch }}" }
-    - {extension_name: ckanext-spatial, extension_branch: "{{  ckanext_spatial_branch }}" }
-    - {extension_name: ckanext-geoview, extension_branch: "{{ ckanext_geoview_branch }}" }     
+    - {extension_name: ckanext-scheming, extension_branch: "{{ ckanext_scheming_branch }}", requirements_file: requirements.txt }
+    - {extension_name: ckanext-spatial, extension_branch: "{{  ckanext_spatial_branch }}", requirements_file: pip-requirements.txt }
+    - {extension_name: ckanext-geoview, extension_branch: "{{ ckanext_geoview_branch }}", requirements_file: pip-requirements.txt }
   notify: Restart Apache webserver
 
 
