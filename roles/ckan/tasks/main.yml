@@ -339,7 +339,8 @@
     su -s /bin/bash - ckan
     cd /usr/lib/ckan
     . default/bin/activate
-    pip install ckanext-geoview
+    pip install -e git+git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckanext-geoview.git@{{ ckanext_geoview_branch }}#egg=ckanext-geoview
+    pip install -r /usr/lib/ckan/default/src/ckanext-geoview/pip-requirements.txt
     exit
   notify: Restart Apache webserver
 
