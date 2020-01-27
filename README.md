@@ -25,7 +25,7 @@ git checkout rebase-dev-from-master; git pull -r
 
 3. Run the playbook using the following commands
 ```bash
-ansible-playbook playbook.yml -i environment/development/hosts
+ansible-playbook playbook.yml -i environments/development/hosts
 ```
 
 ## Deploying CKAN on production instance
@@ -45,7 +45,7 @@ git checkout release-<release_version>; git pull -r
 
 4. Run the playbook using the following commands
 ```bash
-ansible-playbook playbook.yml -i environment/production/hosts
+ansible-playbook playbook.yml -i environments/production/hosts
 ```
 
 
