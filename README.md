@@ -20,7 +20,7 @@ cd ~/dev; git clone git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/ckand
 
 2. Run below command to checkout latest deployment code for development environment 
 ```bash
-git checkout rebase-dev-from-master; git pull -r
+git checkout develop; git pull -r
 ```
 
 3. Run the playbook using the following commands
@@ -30,7 +30,7 @@ ansible-playbook playbook.yml -i environments/development/hosts
 
 ## Deploying CKAN on production instance
 
-*Note:* You should create a branch named _release-<release_version>_ from the _rebase-dev-from-master_ which has changes required to be deployed on production. For example, release-0.1.0.
+*Note:* You should create a branch named _release-<release_version>_ from the _develop_ which has changes required to be deployed on production. For example, release-0.1.0.
 
 1. [Ignore if already cloned] Run the below command to clone the ckanDeploy on the production CKAN server under prod directory.
 ```bash
