@@ -22,7 +22,8 @@
     ckanext_scheming_branch: master 
     ckanext_spatial_branch: master
     syngenta_theme_branch: Dev
-    ckan_harvest_branch: 65e3163015079f425805a6b35458b1b1bf6d0ce0 
+    ckan_harvest_branch: 65e3163015079f425805a6b35458b1b1bf6d0ce0
+    ckanext_geoview_branch: master 
   roles:
     - { role: common,          tags: ['role_common'] }
     - { role: certificates,    tags: ['role_certificates'] }
