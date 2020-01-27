@@ -331,7 +331,7 @@
     cd /usr/lib/ckan
     . default/bin/activate
     pip install -e git+git@git.syngentaaws.org:dda/platforms/GISPlatform/gris/{{ item.extension_name}}.git@{{ item.extension_branch }}#egg={{ item.extension_name }}
-    pip install -r /usr/lib/ckan/default/src/{{ item.extension_name }}/{{ requirements_file }}
+    pip install -r /usr/lib/ckan/default/src/{{ item.extension_name }}/{{ item.requirements_file }}
     exit
   with_items: 
     - {extension_name: ckanext-scheming, extension_branch: "{{ ckanext_scheming_branch }}", requirements_file: requirements.txt }
